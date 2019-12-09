@@ -10,8 +10,8 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 /**
- *
- * @author justi
+ * 
+ * @author Justin
  */
 public class ParamaterStringBuilder {
     public static String getParamsString(Map<String, String> params) 

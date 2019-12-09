@@ -9,7 +9,7 @@ package climatonix;
  *
  * @author Justin Toft
  */
-public final class Constants {
+public class Constants {
     
     private static Constants currentIntance;
     
@@ -30,5 +30,5 @@ public final class Constants {
     }
     
     public final String API_KEY = "54d83a3134fc8396ccb7e043d2b3b7de";
-    public final String BASE_URL = "api.openweathermap.org/data/2.5/";
+    public final String BASE_URL = "https://api.openweathermap.org//data//2.5//";
 }

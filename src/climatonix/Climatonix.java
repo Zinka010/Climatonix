@@ -18,18 +18,21 @@ public class Climatonix {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        APIUtils apiUtils = new APIUtils();
         
         JSONObject jSONObject;
         
         
         try {
-            jSONObject = apiUtils.request("weather");
+            jSONObject = APIUtils.request("weather");
         } catch(Exception e) {
             e.printStackTrace();
         }
         
         int h = 0;
+    }
+    
+    public double kelvinToCelcius(double kelvin) {
+        return kelvin - 273.15;
     }
     
 }

@@ -19,10 +19,11 @@ import org.json.JSONObject;
  * @author justi
  */
 public class APIUtils {
+    
+    private APIUtils() { }
 
-    public JSONObject request(String requestType) throws MalformedURLException, ProtocolException, IOException {
+    public static JSONObject request(String requestType) throws MalformedURLException, ProtocolException, IOException {
         
-
         Map<String, String> parameters = new HashMap<>();
         parameters.put("q", "Ottawa");
         parameters.put("appid", Constants.getInstance().API_KEY);
@@ -45,5 +46,8 @@ public class APIUtils {
         return new JSONObject(content.toString());
     }
 
+    public static double kelvinToCelcius(double kelvin) {
+        return kelvin - 273.15;
+    }
     // https://www.baeldung.com/java-http-request
 }

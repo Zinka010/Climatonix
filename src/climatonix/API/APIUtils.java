@@ -30,7 +30,7 @@ public class APIUtils {
     /**
      * Faire un GET request à l'API
      * @param requestType Le type de get à faire (weather, etc.)
-     * @param cityName Le nom de la ville voule
+     * @param cityName Le nom de la ville voulu
      * @return Le JSON obtenu dans le format JSONObject
      * @throws MalformedURLException
      * @throws ProtocolException

@@ -5,6 +5,8 @@
  */
 package climatonix;
 
+import org.json.JSONObject;
+
 /**
  *
  * @author justi
@@ -18,5 +20,4 @@ public class Climatonix {
         InterfaceClimatonix weather = new InterfaceClimatonix();
         weather.setVisible(true);
     }
-    
 }

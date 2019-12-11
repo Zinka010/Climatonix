@@ -23,17 +23,18 @@ public class APIUtils {
 
     // Ceci est une class statique et ne devrait pas être instantié
     private APIUtils() {
-       
+
     }
 
     /**
      * Faire un GET request à l'API
+     *
      * @param requestType Le type de get à faire (weather, etc.)
      * @param cityName Le nom de la ville voulu
      * @return Le JSON obtenu dans le format JSONObject
      * @throws MalformedURLException
      * @throws ProtocolException
-     * @throws IOException 
+     * @throws IOException
      */
     public static JSONObject request(String requestType, String cityName) throws MalformedURLException, ProtocolException, IOException {
 
@@ -44,7 +45,7 @@ public class APIUtils {
 
         // Créer l'URL
         URL url = new URL(Constants.getInstance().BASE_URL + requestType + "?" + ParamaterStringBuilder.getParamsString(parameters));
-        
+
         // Ouvrir la connection
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -67,6 +68,7 @@ public class APIUtils {
 
     /**
      * Convertir de Kelvin en degrées Celcius
+     *
      * @param kelvin La température en kelvin
      * @return La température en degrées Celcius
      */
@@ -76,27 +78,45 @@ public class APIUtils {
 
     /**
      * Retourné la température courrante des données JSON format "weather"
-     * 
-     * @param jSONObject
-     * @return La température, ou null si le JSON est invalide
+     *
+     * @param jSONObject L'objet json avc les données
+     * @return La température en celcius
+     * @throws JSONException Le JSON est invalide
      */
-    public static Double getTempature(JSONObject jSONObject) {
-        try {
-            // Obtenir les données sous "main"
-            JSONObject main = jSONObject.getJSONObject("main");
-            
-            // Obtenir la température
-            double tempature = main.getDouble("temp");
-            
-            // Convertir de kelvin à celcius
-            tempature = kelvinToCelcius(tempature);
-            return tempature;
-        } catch (JSONException e) {
-            // Les données JSON étaient invalide
-            System.err.println("JSON Invalide");
-            return null;
-        }
+    public static Double getTempature(JSONObject jSONObject) throws JSONException{
+
+        // Obtenir les données sous "main"
+        JSONObject main = jSONObject.getJSONObject("main");
+
+        // Obtenir la température
+        double tempature = main.getDouble("temp");
+
+        // Convertir de kelvin à celcius
+        return kelvinToCelcius(tempature);
 
     }
-   
+
+    private static double msToKmH(double ms) {
+        return ms * 3.6;
+    }
+
+    /**
+     * Retourné la vitesse du vent des données JSON format "weather"
+     * 
+     * @param jSONObject L'objet json avc les données
+     * @return La vitesse du vent en km/h
+     * @throws JSONException Le JSON est invalide
+     */
+    public static Double getWindSpeed(JSONObject jSONObject) throws JSONException {
+
+        // Obtenir les données sous "wind"
+        JSONObject wind = jSONObject.getJSONObject("wind");
+
+        // Obtenir la vitesse du vent
+        double speed = wind.getDouble("speed");
+
+        // Convertir de m/s à km/h
+        return msToKmH(speed);
+
+    }
 }

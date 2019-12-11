@@ -1,5 +1,10 @@
 package climatonix;
 
+import climatonix.API.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -42,6 +47,11 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(400, 300));
         setType(java.awt.Window.Type.UTILITY);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(102, 204, 255));
         pnlMain.setToolTipText("");
@@ -75,6 +85,11 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
         btnRefresh.setBorder(null);
         btnRefresh.setBorderPainted(false);
         btnRefresh.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -131,6 +146,36 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        try {
+            String city = "Ottawa";
+            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city))));
+            lblTemperature.setText(temperature + "°C");
+            lblLocation.setText("in " + city + ".");
+        } catch (MalformedURLException e) {
+            System.out.println(e);
+        } catch (ProtocolException ex) {
+            System.out.println(ex);
+        } catch (IOException ez) {
+            System.out.println(ez);
+        }
+    }//GEN-LAST:event_btnRefreshMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            String city = "Ottawa";
+            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city))));
+            lblTemperature.setText(temperature + "°C");
+            lblLocation.setText("in " + city + ".");
+        } catch (MalformedURLException e) {
+            System.out.println(e);
+        } catch (ProtocolException ex) {
+            System.out.println(ex);
+        } catch (IOException ez) {
+            System.out.println(ez);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

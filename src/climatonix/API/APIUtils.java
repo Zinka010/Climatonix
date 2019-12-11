@@ -7,7 +7,6 @@ package climatonix.API;
 
 import climatonix.Constants;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
@@ -66,6 +65,11 @@ public class APIUtils {
         return new JSONObject(content.toString());
     }
 
+    /**
+     * Convertir de Kelvin en degrées Celcius
+     * @param kelvin La température en kelvin
+     * @return La température en degrées Celcius
+     */
     private static double kelvinToCelcius(double kelvin) {
         return kelvin - 273.15;
     }
@@ -89,6 +93,7 @@ public class APIUtils {
             return tempature;
         } catch (JSONException e) {
             // Les données JSON étaient invalide
+            System.err.println("JSON Invalide");
             return null;
         }
 

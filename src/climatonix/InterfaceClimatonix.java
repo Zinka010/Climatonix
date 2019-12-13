@@ -148,9 +148,13 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        // Try-catch for errors thrown by the APIUtils.getTemperature() method
         try {
+            // Initialize the variables
             String city = "Ottawa";
-            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city))));
+            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city)))); // Round temperature and converts to string
+            
+            // Update the labels with new values
             lblTemperature.setText(temperature + "°C");
             lblLocation.setText("in " + city + ".");
         } catch (MalformedURLException e) {
@@ -163,9 +167,13 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefreshMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // Try-catch for errors thrown by the APIUtils.getTemperature() method
         try {
+            // Initialize the variables
             String city = "Ottawa";
-            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city))));
+            String temperature = Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", city)))); // Round temperature and converts to string
+            
+            // Update the labels with new values
             lblTemperature.setText(temperature + "°C");
             lblLocation.setText("in " + city + ".");
         } catch (MalformedURLException e) {

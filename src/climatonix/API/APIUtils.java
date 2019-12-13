@@ -27,30 +27,30 @@ public class APIUtils {
     }
 
     /**
-     * Faire un GET request à l'API
+     * Make a GET request to the API
      *
-     * @param requestType Le type de get à faire (weather, etc.)
-     * @param cityName Le nom de la ville voulu
-     * @return Le JSON obtenu dans le format JSONObject
-     * @throws MalformedURLException
-     * @throws ProtocolException
-     * @throws IOException
+     * @param requestType The type of data (weather, etc.)
+     * @param cityName The name of the desired city
+     * @return The JSON data in the JSONObject
+     * @throws MalformedURLException The url was malformed and returned an error
+     * @throws ProtocolException Invalid protocol
+     * @throws IOException Error with reading the page
      */
     public static JSONObject request(String requestType, String cityName) throws MalformedURLException, ProtocolException, IOException {
 
-        // Indiqué les paramètres du GET request
+        // The paramaters of the GET request
         Map<String, String> parameters = new HashMap<>();
         parameters.put("q", cityName);
         parameters.put("appid", Constants.getInstance().API_KEY);
 
-        // Créer l'URL
+        // Create the URL to the API
         URL url = new URL(Constants.getInstance().BASE_URL + requestType + "?" + ParamaterStringBuilder.getParamsString(parameters));
 
-        // Ouvrir la connection
+        // Open the connection
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
-        // Sauver les données obtenus
+        // Save the found JSON data
         int status = con.getResponseCode();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -62,36 +62,36 @@ public class APIUtils {
         in.close();
         con.disconnect();
 
-        // Retourner le JSONObject créer du texte obtenu
+        // Retourner the data in the JSONObject format
         return new JSONObject(content.toString());
     }
 
     /**
-     * Convertir de Kelvin en degrées Celcius
+     * Convert Kelvin to Celcius
      *
-     * @param kelvin La température en kelvin
-     * @return La température en degrées Celcius
+     * @param kelvin The tempature in Kelvin
+     * @return La tempature in degrees Celcius
      */
     private static double kelvinToCelcius(double kelvin) {
         return kelvin - 273.15;
     }
 
     /**
-     * Retourné la température courrante des données JSON format "weather"
+     * Return the weather of the JSON obtained from the "weather" request
      *
-     * @param jSONObject L'objet json avc les données
-     * @return La température en celcius
-     * @throws JSONException Le JSON est invalide
+     * @param jSONObject The JSON data
+     * @return The tempature in celcius
+     * @throws JSONException The JSON is invalid
      */
     public static Double getTempature(JSONObject jSONObject) throws JSONException{
 
-        // Obtenir les données sous "main"
+        // Get the data under "main"
         JSONObject main = jSONObject.getJSONObject("main");
 
-        // Obtenir la température
+        // Get the tempature
         double tempature = main.getDouble("temp");
 
-        // Convertir de kelvin à celcius
+        // Convert from kelvin to celcius
         return kelvinToCelcius(tempature);
 
     }
@@ -101,21 +101,21 @@ public class APIUtils {
     }
 
     /**
-     * Retourné la vitesse du vent des données JSON format "weather"
+     * Return the wind speed of the JSON obtained from the "weather" request
      * 
-     * @param jSONObject L'objet json avc les données
-     * @return La vitesse du vent en km/h
-     * @throws JSONException Le JSON est invalide
+     * @param jSONObject The JSON data from the weather request
+     * @return The speed of the wind in km/h
+     * @throws JSONException The JSON is invalid
      */
     public static Double getWindSpeed(JSONObject jSONObject) throws JSONException {
 
-        // Obtenir les données sous "wind"
+        // Get the data under "wind"
         JSONObject wind = jSONObject.getJSONObject("wind");
 
-        // Obtenir la vitesse du vent
+        // Get the wind speed
         double speed = wind.getDouble("speed");
 
-        // Convertir de m/s à km/h
+        // Convert from m/s to km/h
         return msToKmH(speed);
 
     }

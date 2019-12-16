@@ -21,11 +21,6 @@ public class Climatonix {
         InterfaceClimatonix weather = new InterfaceClimatonix();
         weather.setVisible(true);
         
-        try {
-            JSONObject jSONObject = APIUtils.request("weather", "Ottawa");
-            System.out.println(APIUtils.getWindSpeed(jSONObject));
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+       
     }
 }

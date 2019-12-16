@@ -119,4 +119,9 @@ public class APIUtils {
         return msToKmH(speed);
 
     }
+    
+    public static String getDescription(JSONObject jSONObject) throws JSONException {
+        JSONObject weather = jSONObject.getJSONObject("weather");
+        return weather.getString("description");
+    }
 }

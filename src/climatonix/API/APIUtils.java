@@ -23,33 +23,34 @@ public class APIUtils {
 
     // Ceci est une class statique et ne devrait pas être instantié
     private APIUtils() {
-       
+
     }
 
     /**
-     * Faire un GET request à l'API
-     * @param requestType Le type de get à faire (weather, etc.)
-     * @param cityName Le nom de la ville voulu
-     * @return Le JSON obtenu dans le format JSONObject
-     * @throws MalformedURLException
-     * @throws ProtocolException
-     * @throws IOException 
+     * Make a GET request to the API
+     *
+     * @param requestType The type of data (weather, etc.)
+     * @param cityName The name of the desired city
+     * @return The JSON data in the JSONObject
+     * @throws MalformedURLException The url was malformed and returned an error
+     * @throws ProtocolException Invalid protocol
+     * @throws IOException Error with reading the page
      */
     public static JSONObject request(String requestType, String cityName) throws MalformedURLException, ProtocolException, IOException {
 
-        // Indiqué les paramètres du GET request
+        // The paramaters of the GET request
         Map<String, String> parameters = new HashMap<>();
         parameters.put("q", cityName);
         parameters.put("appid", Constants.getInstance().API_KEY);
 
-        // Créer l'URL
+        // Create the URL to the API
         URL url = new URL(Constants.getInstance().BASE_URL + requestType + "?" + ParamaterStringBuilder.getParamsString(parameters));
-        
-        // Ouvrir la connection
+
+        // Open the connection
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
-        // Sauver les données obtenus
+        // Save the found JSON data
         int status = con.getResponseCode();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -61,42 +62,61 @@ public class APIUtils {
         in.close();
         con.disconnect();
 
-        // Retourner le JSONObject créer du texte obtenu
+        // Retourner the data in the JSONObject format
         return new JSONObject(content.toString());
     }
 
     /**
-     * Convertir de Kelvin en degrées Celcius
-     * @param kelvin La température en kelvin
-     * @return La température en degrées Celcius
+     * Convert Kelvin to Celcius
+     *
+     * @param kelvin The tempature in Kelvin
+     * @return La tempature in degrees Celcius
      */
     private static double kelvinToCelcius(double kelvin) {
         return kelvin - 273.15;
     }
 
     /**
-     * Retourné la température courrante des données JSON format "weather"
-     * 
-     * @param jSONObject
-     * @return La température, ou null si le JSON est invalide
+     * Return the weather of the JSON obtained from the "weather" request
+     *
+     * @param jSONObject The JSON data
+     * @return The tempature in celcius
+     * @throws JSONException The JSON is invalid
      */
-    public static Double getTempature(JSONObject jSONObject) {
-        try {
-            // Obtenir les données sous "main"
-            JSONObject main = jSONObject.getJSONObject("main");
-            
-            // Obtenir la température
-            double tempature = main.getDouble("temp");
-            
-            // Convertir de kelvin à celcius
-            tempature = kelvinToCelcius(tempature);
-            return tempature;
-        } catch (JSONException e) {
-            // Les données JSON étaient invalide
-            System.err.println("JSON Invalide");
-            return null;
-        }
+    public static Double getTempature(JSONObject jSONObject) throws JSONException{
+
+        // Get the data under "main"
+        JSONObject main = jSONObject.getJSONObject("main");
+
+        // Get the tempature
+        double tempature = main.getDouble("temp");
+
+        // Convert from kelvin to celcius
+        return kelvinToCelcius(tempature);
 
     }
-   
+
+    private static double msToKmH(double ms) {
+        return ms * 3.6;
+    }
+
+    /**
+     * Return the wind speed of the JSON obtained from the "weather" request
+     * 
+     * @param jSONObject The JSON data from the weather request
+     * @return The speed of the wind in km/h
+     * @throws JSONException The JSON is invalid
+     */
+    public static Double getWindSpeed(JSONObject jSONObject) throws JSONException {
+
+        // Get the data under "wind"
+        JSONObject wind = jSONObject.getJSONObject("wind");
+
+        // Get the wind speed
+        double speed = wind.getDouble("speed");
+
+        // Convert from m/s to km/h
+        return msToKmH(speed);
+
+    }
 }

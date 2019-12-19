@@ -5,6 +5,7 @@
  */
 package climatonix;
 
+import java.util.ArrayList;
 import climatonix.API.APIUtils;
 import org.json.JSONObject;
 

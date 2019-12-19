@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +60,8 @@ public class APIUtils {
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
+        
+        // Close all reading utilities
         in.close();
         con.disconnect();
 
@@ -118,5 +121,23 @@ public class APIUtils {
         // Convert from m/s to km/h
         return msToKmH(speed);
 
+    }
+    
+    /**
+     * Return the description of the weather of the JSON obtained from the "weather" request
+     * 
+     * @param jSONObject The JSON data from the weather request
+     * @return The description of the weather
+     * @throws JSONException The JSON is invalid
+     */
+    public static String getDescription(JSONObject jSONObject) throws JSONException {
+        // Get the Weather in the JSONArray format
+        JSONArray weather = jSONObject.getJSONArray("weather");
+        
+        // Get the first item in the JSONArray
+        JSONObject weatherObj = weather.getJSONObject(0);
+        
+        // Return the provided description
+        return weatherObj.getString("description");
     }
 }

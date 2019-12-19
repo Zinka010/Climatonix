@@ -22,7 +22,7 @@ public class Climatonix {
 //        weather.setVisible(true);
         
         try {
-            JSONObject jSONObject = APIUtils.request("weather", "Manchester");
+            JSONObject jSONObject = APIUtils.request("weather", "Ottawa");
             System.out.println(APIUtils.getDescription(jSONObject));
         } catch (Exception e) {
             e.printStackTrace();

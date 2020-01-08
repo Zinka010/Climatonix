@@ -19,7 +19,8 @@ public class Climatonix {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
+        interfaceClimatonix.setVisible(true);
        
     }
 }

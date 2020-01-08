@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author justi
+ * @author Benjamin
  */
 public class Climatonix {
 
@@ -24,6 +24,5 @@ public class Climatonix {
     public static void main(String[] args) {
         InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
         interfaceClimatonix.setVisible(true);
-
     }
 }

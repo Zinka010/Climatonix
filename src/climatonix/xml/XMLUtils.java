@@ -15,7 +15,6 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
-import nu.xom.Serializer;
 
 /**
  *
@@ -28,6 +27,12 @@ public class XMLUtils {
 
     }
 
+    /**
+     * 
+     * @param cityName The desired city
+     * @throws ParsingException There was an error parsing the XML
+     * @throws IOException There was an error reading or writing to the file
+     */
     public static void addFavourite(String cityName) throws ParsingException, IOException {
         // Create a new File
         File favouritesFile = new File("favourites.xml");
@@ -60,21 +65,71 @@ public class XMLUtils {
         root.appendChild(city);
 
         // Save the file, clobbering the existing file
-        Serializer serialisation = new Serializer(System.out);
-        serialisation.setIndent(4);
-        serialisation.setMaxLength(64);
-        serialisation.write(document);
-
         FileWriter fileWriter = new FileWriter(favouritesFile);
 
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-        System.out.println(document.toXML());
         bufferedWriter.write(document.toXML());
         bufferedWriter.close();
 
     }
+    
+    /**
+     * 
+     * @param cityName The name of the city to be removed
+     * @throws IOException There was an error reading writing to the file
+     * @throws ParsingException There was an error reading the XML
+     */
+    public static void removeFavourite(String cityName) throws IOException, ParsingException {
+      
+        // Create a new File
+        File favouritesFile = new File("favourites.xml");
+        Builder builder = new Builder();
 
+        // Initialize 
+        Document document;
+        Element root;
+
+        // If the file exists, build it from the existing XML
+        if (favouritesFile.exists()) {
+
+            document = builder.build(favouritesFile);
+
+            root = document.getRootElement();
+
+
+        } else {
+            // Otherwise, build a new instance of it
+            root = new Element("cities");
+            document = new Document(root);
+        }
+
+        // Search for the desired element
+        for(int i = 0; i < root.getChildElements().size(); i++) {
+            System.out.println(root.getChild(i).getChild(0).getValue() + ", " + cityName);
+            
+            if(root.getChild(i).getChild(0).getValue().equalsIgnoreCase(cityName)) {
+                root.removeChild(i);
+            }
+        }
+
+        // Save the file, clobbering the existing file
+        FileWriter fileWriter = new FileWriter(favouritesFile);
+
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        bufferedWriter.write(document.toXML());
+        bufferedWriter.close();
+        
+        
+    }
+
+    /**
+     * 
+     * @return An ArrayList of favourite cities
+     * @throws IOException There was an error reading and writing to file
+     * @throws ParsingException There was an error reading the XML
+     */
     public static ArrayList<String> getFavourites() throws IOException, ParsingException {
 
         // Create a new file

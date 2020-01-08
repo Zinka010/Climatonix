@@ -24,5 +24,6 @@ public class Climatonix {
     public static void main(String[] args) {
         InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
         interfaceClimatonix.setVisible(true);
+
     }
 }

@@ -4,7 +4,7 @@
 
 ### Instructions pour NetBeans 8.2
 
-1. Télécharger le jar au bas de la page https://github.com/stleary/JSON-java
+1. [Télécharger le jar ici](https://repo1.maven.org/maven2/org/json/json/20190722/json-20190722.jar)
 2. Faire un clic droit sur le dossier du projet
 3. Sélectionner Properties > Libraries > Add Library > Create
 4. Nomme le JSONObject

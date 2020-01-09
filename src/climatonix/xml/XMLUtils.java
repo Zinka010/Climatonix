@@ -18,7 +18,7 @@ import nu.xom.ParsingException;
 
 /**
  *
- * @author justi
+ * @author Justin
  */
 public class XMLUtils {
 
@@ -28,7 +28,7 @@ public class XMLUtils {
     }
 
     /**
-     * 
+     *
      * @param cityName The desired city
      * @throws ParsingException There was an error parsing the XML
      * @throws IOException There was an error reading or writing to the file
@@ -49,39 +49,53 @@ public class XMLUtils {
 
             root = document.getRootElement();
 
-            Elements childrenElements = root.getChildElements();
-
         } else {
             // Otherwise, build a new instance of it
             root = new Element("cities");
             document = new Document(root);
         }
 
-        // Create a new element with the desired city name
-        Element city = new Element("city");
-        city.appendChild(cityName);
+        // As a default, it is not a duplicate
+        Boolean duplicate = false;
 
-        // Append it to the root element
-        root.appendChild(city);
+        // Search for the desired element
+        for (int i = 0; i < root.getChildElements().size(); i++) {
 
-        // Save the file, clobbering the existing file
-        FileWriter fileWriter = new FileWriter(favouritesFile);
+            // The city is a duplicate and should therefore not be added again
+            if (root.getChild(i).getChild(0).getValue().equalsIgnoreCase(cityName)) {
+                duplicate = true;
+                break;
+            }
+        }
 
-        // Write to the file
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        bufferedWriter.write(document.toXML());
-        bufferedWriter.close();
+        if (!duplicate) {
+
+            // Create a new element with the desired city name
+            Element city = new Element("city");
+            city.appendChild(cityName);
+
+            // Append it to the root element
+            root.appendChild(city);
+
+            // Save the file, clobbering the existing file
+            FileWriter fileWriter = new FileWriter(favouritesFile);
+
+            // Write to the file
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(document.toXML());
+            bufferedWriter.close();
+        }
 
     }
-    
+
     /**
-     * 
+     *
      * @param cityName The name of the city to be removed
      * @throws IOException There was an error reading writing to the file
      * @throws ParsingException There was an error reading the XML
      */
     public static void removeFavourite(String cityName) throws IOException, ParsingException {
-      
+
         // Create a new File
         File favouritesFile = new File("favourites.xml");
         Builder builder = new Builder();
@@ -97,7 +111,6 @@ public class XMLUtils {
 
             root = document.getRootElement();
 
-
         } else {
             // Otherwise, build a new instance of it
             root = new Element("cities");
@@ -105,11 +118,10 @@ public class XMLUtils {
         }
 
         // Search for the desired element
-        for(int i = 0; i < root.getChildElements().size(); i++) {
-            System.out.println(root.getChild(i).getChild(0).getValue() + ", " + cityName);
-            
+        for (int i = 0; i < root.getChildElements().size(); i++) {
+
             // Remove all instances of the city the favourites.xml file
-            if(root.getChild(i).getChild(0).getValue().equalsIgnoreCase(cityName)) {
+            if (root.getChild(i).getChild(0).getValue().equalsIgnoreCase(cityName)) {
                 root.removeChild(i);
             }
         }
@@ -121,12 +133,11 @@ public class XMLUtils {
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.write(document.toXML());
         bufferedWriter.close();
-        
-        
+
     }
 
     /**
-     * 
+     *
      * @return An ArrayList of favourite cities
      * @throws IOException There was an error reading and writing to file
      * @throws ParsingException There was an error reading the XML
@@ -152,10 +163,10 @@ public class XMLUtils {
             }
 
             // If the ArrayList is empty, return null for uniformity
-            if(favourites.isEmpty()) {
+            if (favourites.isEmpty()) {
                 return null;
             }
-            
+
             // Return the populated ArrayList
             return favourites;
 

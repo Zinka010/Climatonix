@@ -67,8 +67,8 @@ public class XMLUtils {
         // Save the file, clobbering the existing file
         FileWriter fileWriter = new FileWriter(favouritesFile);
 
+        // Write to the file
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
         bufferedWriter.write(document.toXML());
         bufferedWriter.close();
 
@@ -108,6 +108,7 @@ public class XMLUtils {
         for(int i = 0; i < root.getChildElements().size(); i++) {
             System.out.println(root.getChild(i).getChild(0).getValue() + ", " + cityName);
             
+            // Remove all instances of the city the favourites.xml file
             if(root.getChild(i).getChild(0).getValue().equalsIgnoreCase(cityName)) {
                 root.removeChild(i);
             }
@@ -116,8 +117,8 @@ public class XMLUtils {
         // Save the file, clobbering the existing file
         FileWriter fileWriter = new FileWriter(favouritesFile);
 
+        // Write to the file
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
         bufferedWriter.write(document.toXML());
         bufferedWriter.close();
         

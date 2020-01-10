@@ -16,10 +16,10 @@ import java.util.Map;
 public class ParamaterStringBuilder {
     public static String getParamsString(Map<String, String> params) 
       throws UnsupportedEncodingException{
-        // Le résultat
+        // The StringBuilder
         StringBuilder result = new StringBuilder();
  
-        // Transformer le Map dans le format nécessaire pour le URL
+        // Turn the map into a valid HTTP request
         for (Map.Entry<String, String> entry : params.entrySet()) {
           result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
           result.append("=");
@@ -27,10 +27,10 @@ public class ParamaterStringBuilder {
           result.append("&");
         }
  
-        // Convertir dans un String
+        // Convert to a String, removing any invalid substring
         String resultString = result.toString();
         
-        // Retourner le String
+        // Return the String
         return resultString.length() > 0
           ? resultString.substring(0, resultString.length() - 1)
           : resultString;

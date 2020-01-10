@@ -12,3 +12,12 @@
 6. Clicker add library
 7. Clicker ok
 8. Éxécuter le programme
+
+1. [Télécharger le jar pour JavaFX ici](https://nexus.gluonhq.com/nexus/content/repositories/releases/com/gluonhq/charm-glisten/4.4.1/charm-glisten-4.4.1.jar)
+2. Faire un clic droit sur le dossier du projet
+3. Sélectionner Properties > Libraries > Add Library > Create
+4. Nomme le GluonJFX
+5. Clicker sur Add JAR/Folder et naviguer vers le jar téléchargé à l'étape 1
+6. Clicker add library
+7. Clicker ok
+8. Éxécuter le programme

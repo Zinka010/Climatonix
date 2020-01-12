@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -20,23 +21,30 @@ import javafx.fxml.Initializable;
  */
 public class ClimatonixController implements Initializable {
 
-    private AutoCompleteTextField searchcities;
-    
+    @FXML
+    private AutoCompleteTextField<String> searchcities;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Cities listofcities = CitiesImportUtil.importCitiesFromCSV("src/climatonix/citiesListSorted.csv");
-        List<String> citiesbystring = new ArrayList();
-        for (int j = 0; j < 26; j++) {
-            for (int i = 0; i < listofcities.cities[j].size(); i++) {
-                citiesbystring.add(listofcities.cities[j].get(i).name);
-            }
-        }
-        
+
         searchcities.setCompleter(s -> {
-            return citiesbystring;
+            Cities listofcities = CitiesImportUtil.importCitiesFromCSV("src/climatonix/citiesListSorted.csv");
+            List<String> citiesbystring = new ArrayList();
+            for (int j = 0; j < 26; j++) {
+                for (int i = 0; i < listofcities.cities[j].size(); i++) {
+                    citiesbystring.add(listofcities.cities[j].get(i).name);
+                }
+            }
+            List<String> searched = new ArrayList();
+            for (int x = 0; x < citiesbystring.size(); x++) {
+                if (citiesbystring.get(x).contains(s)) {
+                    searched.add(citiesbystring.get(x));
+                }
+            }
+            return searched;
         });
     }
 

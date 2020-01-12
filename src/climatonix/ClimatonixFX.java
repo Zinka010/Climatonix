@@ -26,6 +26,7 @@ public class ClimatonixFX extends Application {
         
         primaryStage.setTitle("Climatonix");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

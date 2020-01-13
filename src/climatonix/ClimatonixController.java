@@ -29,18 +29,19 @@ public class ClimatonixController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        Cities listofcities = CitiesImportUtil.importCitiesFromCSV("src/climatonix/citiesListSorted.csv");
+        List<String> citiesbystring = new ArrayList();
+        for (int j = 0; j < 26; j++) {
+            for (int i = 0; i < listofcities.cities[j].size(); i++) {
+                citiesbystring.add(listofcities.cities[j].get(i).name);
+            }
+        }
 
         searchcities.setCompleter(s -> {
-            Cities listofcities = CitiesImportUtil.importCitiesFromCSV("src/climatonix/citiesListSorted.csv");
-            List<String> citiesbystring = new ArrayList();
-            for (int j = 0; j < 26; j++) {
-                for (int i = 0; i < listofcities.cities[j].size(); i++) {
-                    citiesbystring.add(listofcities.cities[j].get(i).name);
-                }
-            }
             List<String> searched = new ArrayList();
             for (int x = 0; x < citiesbystring.size(); x++) {
-                if (citiesbystring.get(x).contains(s)) {
+                if (citiesbystring.get(x).startsWith(s)) {
                     searched.add(citiesbystring.get(x));
                 }
             }

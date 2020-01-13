@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="climatonix.ClimatonixController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="climatonix.ClimatonixController">
    <children>
       <Accordion prefHeight="400.0" prefWidth="600.0">
         <panes>
-          <TitledPane animated="false" text="Weather">
+          <TitledPane animated="false" expanded="true" text="Weather">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                </content>
@@ -18,7 +18,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <AutoCompleteTextField fx:id="searchcities" completerWaitDuration="1000.0ms" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name..." />
+                        <AutoCompleteTextField fx:id="searchcities" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name..." />
                      </children>
                   </AnchorPane>
                </content>

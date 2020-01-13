@@ -44,6 +44,7 @@ public class ClimatonixController implements Initializable {
     @FXML
     private TextFlow displayweather;
 
+
     /**
      * Initializes the controller class.
      */

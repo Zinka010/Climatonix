@@ -22,7 +22,7 @@
             </TitledPane>
           <TitledPane animated="false" expanded="false" text="Favourite Cities">
                <content>
-                  <AnchorPane prefHeight="380.0" prefWidth="600.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <AutoCompleteTextField fx:id="searchcities" completerWaitDuration="1000.0ms" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name..." />
                         <ListView fx:id="displaycities" layoutX="20.0" layoutY="57.0" prefHeight="255.0" prefWidth="560.0" />

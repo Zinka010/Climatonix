@@ -22,6 +22,7 @@ import climatonix.xml.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.text.TextFlow;
 import nu.xom.ParsingException;
 
 /**
@@ -39,6 +40,9 @@ public class ClimatonixController implements Initializable {
     
     @FXML
     private Button addfavourite;
+    
+    @FXML
+    private TextFlow displayweather;
 
     /**
      * Initializes the controller class.

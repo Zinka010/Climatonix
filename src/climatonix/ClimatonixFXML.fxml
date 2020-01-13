@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="climatonix.ClimatonixController">
    <children>
@@ -13,12 +14,15 @@
         <panes>
           <TitledPane animated="false" expanded="true" text="Weather">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TextFlow fx:id="displayweather" layoutX="20.0" layoutY="25.0" prefHeight="300.0" prefWidth="560.0" />
+                     </children></AnchorPane>
                </content>
             </TitledPane>
           <TitledPane animated="false" expanded="false" text="Favourite Cities">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="380.0" prefWidth="600.0">
                      <children>
                         <AutoCompleteTextField fx:id="searchcities" completerWaitDuration="1000.0ms" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name..." />
                         <ListView fx:id="displaycities" layoutX="20.0" layoutY="57.0" prefHeight="255.0" prefWidth="560.0" />

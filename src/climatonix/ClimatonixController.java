@@ -11,8 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import climatonix.xml.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import nu.xom.ParsingException;
 
 /**
  * FXML Controller class
@@ -23,6 +33,12 @@ public class ClimatonixController implements Initializable {
 
     @FXML
     private AutoCompleteTextField<String> searchcities;
+    
+    @FXML
+    private ListView displaycities;
+    
+    @FXML
+    private Button addfavourite;
 
     /**
      * Initializes the controller class.
@@ -45,7 +61,25 @@ public class ClimatonixController implements Initializable {
                     searched.add(citiesbystring.get(x));
                 }
             }
+            
+            displaycities.getItems().clear();
+            
+            for (int z = 0; z < searched.size(); z++) {
+                displaycities.getItems().add(searched.get(z));
+            }
+            
             return searched;
+        });
+        
+        addfavourite.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    XMLUtils.addFavourite(displaycities.getSelectionModel().getSelectedItem().toString());
+                } catch (ParsingException | IOException ex) {
+                    Logger.getLogger(ClimatonixController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         });
     }
 

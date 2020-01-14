@@ -5,6 +5,7 @@
  */
 package climatonix;
 
+import climatonix.CitiesAPI.AutocompleteUtil;
 import climatonix.API.APIUtils;
 import com.gluonhq.charm.glisten.control.AutoCompleteTextField;
 import java.net.URL;

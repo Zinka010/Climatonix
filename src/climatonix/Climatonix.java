@@ -17,9 +17,7 @@ public class Climatonix {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
-//        interfaceClimatonix.setVisible(true);
-
+        // Launch the JavaFX main class
         Application.launch(ClimatonixFX.class, args);
     }
 }

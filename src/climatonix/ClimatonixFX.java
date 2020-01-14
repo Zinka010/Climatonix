@@ -21,14 +21,19 @@ public class ClimatonixFX extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        // Initialize Parent class
         Parent root = FXMLLoader.load(getClass().getResource("ClimatonixFXML.fxml"));
         
+        // Create a new JavaFX scene
         Scene scene = new Scene(root, 592, 390);
         
+        // Configure stage settings
         primaryStage.setTitle("Climatonix");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:icon.png"));
+        
+        // Display application
         primaryStage.show();
     }
 

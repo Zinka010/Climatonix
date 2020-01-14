@@ -5,12 +5,7 @@
  */
 package climatonix;
 
-import java.util.ArrayList;
-import climatonix.API.APIUtils;
-import climatonix.xml.XMLUtils;
-import java.io.File;
-import java.util.ArrayList;
-import org.json.JSONObject;
+import javafx.application.Application;
 
 /**
  *
@@ -22,8 +17,9 @@ public class Climatonix {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
-        interfaceClimatonix.setVisible(true);
+//        InterfaceClimatonix interfaceClimatonix = new InterfaceClimatonix();
+//        interfaceClimatonix.setVisible(true);
 
+        Application.launch(ClimatonixFX.class, args);
     }
 }

@@ -23,7 +23,7 @@ public class ClimatonixFX extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ClimatonixFXML.fxml"));
         
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 592, 390);
         
         primaryStage.setTitle("Climatonix");
         primaryStage.setScene(scene);

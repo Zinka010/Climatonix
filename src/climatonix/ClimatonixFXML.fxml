@@ -3,30 +3,37 @@
 <?import com.gluonhq.charm.glisten.control.AutoCompleteTextField?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="climatonix.ClimatonixController">
    <children>
-      <Accordion prefHeight="400.0" prefWidth="600.0">
+      <Accordion prefHeight="400.0" prefWidth="600.0" expandedPane="$weather">
         <panes>
-          <TitledPane animated="false" expanded="true" text="Weather">
+          <TitledPane fx:id="weather" animated="false" text="Weather">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TextFlow fx:id="displayweather" layoutX="20.0" layoutY="25.0" prefHeight="300.0" prefWidth="560.0" />
+                        <TextFlow fx:id="displayweather" layoutX="20.0" layoutY="50.0" prefHeight="275.0" prefWidth="560.0" />
+                        <ComboBox fx:id="selectcity" layoutX="430.0" layoutY="14.0" prefWidth="150.0" promptText="Select a city..." />
+                        <Button fx:id="refresh" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="⟳" />
                      </children></AnchorPane>
                </content>
             </TitledPane>
           <TitledPane animated="false" expanded="false" text="Favourite Cities">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="370.0" prefWidth="600.0">
                      <children>
-                        <AutoCompleteTextField fx:id="searchcities" completerWaitDuration="1000.0ms" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name..." />
-                        <ListView fx:id="displaycities" layoutX="20.0" layoutY="57.0" prefHeight="255.0" prefWidth="560.0" />
-                        <Button fx:id="addfavourite" layoutX="490.0" layoutY="328.0" mnemonicParsing="false" text="Add favourite" />
+                        <AutoCompleteTextField fx:id="searchcities" completerWaitDuration="1000.0ms" layoutX="19.0" layoutY="14.0" prefHeight="26.0" prefWidth="560.0" promptText="Enter city name to add to favourites..." />
+                        <ListView fx:id="displaycities" layoutX="20.0" layoutY="57.0" prefHeight="150.0" prefWidth="560.0" />
+                        <Button fx:id="addfavourite" layoutX="491.0" layoutY="218.0" mnemonicParsing="false" text="Add favourite" />
+                        <Separator layoutX="19.0" layoutY="253.0" prefHeight="3.0" prefWidth="560.0" />
+                        <ComboBox fx:id="selectcitydelete" layoutX="225.0" layoutY="272.0" prefHeight="25.0" prefWidth="225.0" promptText="Select a favourite city to remove..." />
+                        <Button fx:id="removefavourite" layoutX="470.0" layoutY="272.0" mnemonicParsing="false" text="Remove favourite" />
                      </children>
                   </AnchorPane>
                </content>

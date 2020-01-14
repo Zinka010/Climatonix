@@ -146,10 +146,11 @@ public class ClimatonixController implements Initializable {
             }
 
             displaycities.getItems().clear();
-
-            for (int z = 0; z < searched.size(); z++) {
-                displaycities.getItems().add(searched.get(z));
+            try {
+                displaycities.getItems().setAll(searched);
+            } catch (IllegalStateException e) {
             }
+            
 
             return searched;
         });
@@ -166,6 +167,7 @@ public class ClimatonixController implements Initializable {
                     for (int g = 0; g < XMLUtils.getFavourites().size(); g++) {
                         favouritecities.add(XMLUtils.getFavourites().get(g));
                     }
+                    
                     selectcity.getItems().clear();
                     selectcity.getItems().setAll(favouritecities);
 
@@ -180,33 +182,35 @@ public class ClimatonixController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
-                    temp.setFill(Color.BLACK);
-                    temp.setFont(Font.font("System", 100));
+                    if (selectcity.getSelectionModel().getSelectedIndex() != -1) {
+                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        temp.setFill(Color.BLACK);
+                        temp.setFont(Font.font("System", 100));
 
-                    Text lnbreak = new Text("\n");
+                        Text lnbreak = new Text("\n");
 
-                    Text space = new Text(" ");
+                        Text space = new Text(" ");
 
-                    Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
-                    wind.setFill(Color.BLACK);
-                    wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
+                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        wind.setFill(Color.BLACK);
+                        wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
-                    Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
-                    desc.setFill(Color.BLACK);
-                    desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
+                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
+                        desc.setFill(Color.BLACK);
+                        desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
 
-                    displayweather.getChildren().clear();
-                    displayweather.getChildren().add(temp);
-                    displayweather.getChildren().add(lnbreak);
-                    displayweather.getChildren().add(desc);
-                    displayweather.getChildren().add(space);
-                    displayweather.getChildren().add(wind);
+                        displayweather.getChildren().clear();
+                        displayweather.getChildren().add(temp);
+                        displayweather.getChildren().add(lnbreak);
+                        displayweather.getChildren().add(desc);
+                        displayweather.getChildren().add(space);
+                        displayweather.getChildren().add(wind);
 
-                    FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
-                    anim.setFromValue(0.0);
-                    anim.setToValue(1.0);
-                    anim.play();
+                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
+                        anim.setFromValue(0.0);
+                        anim.setToValue(1.0);
+                        anim.play();
+                    }
                 } catch (ProtocolException ex) {
                 } catch (IOException ex) {
                 }
@@ -217,33 +221,35 @@ public class ClimatonixController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
-                    temp.setFill(Color.BLACK);
-                    temp.setFont(Font.font("System", 100));
+                    if (selectcity.getSelectionModel().getSelectedIndex() != -1) {
+                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        temp.setFill(Color.BLACK);
+                        temp.setFont(Font.font("System", 100));
 
-                    Text lnbreak = new Text("\n");
+                        Text lnbreak = new Text("\n");
 
-                    Text space = new Text(" ");
+                        Text space = new Text(" ");
 
-                    Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
-                    wind.setFill(Color.BLACK);
-                    wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
+                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        wind.setFill(Color.BLACK);
+                        wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
-                    Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
-                    desc.setFill(Color.BLACK);
-                    desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
+                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
+                        desc.setFill(Color.BLACK);
+                        desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
 
-                    displayweather.getChildren().clear();
-                    displayweather.getChildren().add(temp);
-                    displayweather.getChildren().add(lnbreak);
-                    displayweather.getChildren().add(desc);
-                    displayweather.getChildren().add(space);
-                    displayweather.getChildren().add(wind);
+                        displayweather.getChildren().clear();
+                        displayweather.getChildren().add(temp);
+                        displayweather.getChildren().add(lnbreak);
+                        displayweather.getChildren().add(desc);
+                        displayweather.getChildren().add(space);
+                        displayweather.getChildren().add(wind);
 
-                    FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
-                    anim.setFromValue(0.0);
-                    anim.setToValue(1.0);
-                    anim.play();
+                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
+                        anim.setFromValue(0.0);
+                        anim.setToValue(1.0);
+                        anim.play();
+                    }
                 } catch (ProtocolException ex) {
                 } catch (IOException ex) {
                 }
@@ -262,6 +268,7 @@ public class ClimatonixController implements Initializable {
                     for (int g = 0; g < XMLUtils.getFavourites().size(); g++) {
                         favouritecities.add(XMLUtils.getFavourites().get(g));
                     }
+                    
                     selectcity.getItems().clear();
                     selectcity.getItems().setAll(favouritecities);
 

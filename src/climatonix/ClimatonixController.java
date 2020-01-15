@@ -22,7 +22,14 @@ import climatonix.xml.*;
 import java.io.IOException;
 import java.net.ProtocolException;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -40,7 +47,7 @@ public class ClimatonixController implements Initializable {
 
     // Declare JavaFX fx:ids
     @FXML
-    private AutoCompleteTextField<String> searchcities;
+    private TextField searchcities;
 
     @FXML
     private ListView displaycities;
@@ -68,6 +75,7 @@ public class ClimatonixController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         // Create a new list of favourite cities
         List<String> favouritecities = new ArrayList<>();
         try {
@@ -126,33 +134,39 @@ public class ClimatonixController implements Initializable {
         } catch (IOException | ParsingException ex) {
         }
 
-        // Set the completer of the AutoCompleteTextField with lambda
-        searchcities.setCompleter(s -> {
-            // Initialize variables
-            List<String> searched = new ArrayList();
-            AutocompleteUtil util = new AutocompleteUtil();
+        searchcities.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                if (!newValue.isEmpty()) {
+                    // Initialize variables
+                    List<String> searched = new ArrayList();
+                    AutocompleteUtil util = new AutocompleteUtil();
 
-            // Find searches matching cities in list using AutocompleteUtils
-            for (int q = 0; q < util.query(s).size(); q++) {
-                searched.add(util.query(s).get(q)); // Add them to List searched
+                    // Find searches matching cities in list using AutocompleteUtils
+                    for (int q = 0; q < util.query(searchcities.getText()).size(); q++) {
+                        searched.add(util.query(searchcities.getText()).get(q)); // Add them to List searched
+                    }
+
+                    // Display matching searches in city list
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            displaycities.getItems().clear();
+                            displaycities.getItems().setAll(searched);
+                        }
+                    });
+                }
             }
-
-            // Display matching searches in city list
-            displaycities.getItems().clear();
-            try {
-                displaycities.getItems().setAll(searched);
-            } catch (IllegalStateException e) {
-            }
-
-            return searched;
         });
-
+        
         addfavourite.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // Adds selected city to favourites using XMLUtils
                 try {
-                    XMLUtils.addFavourite(displaycities.getSelectionModel().getSelectedItem().toString());
+                    if (!displaycities.getSelectionModel().isEmpty()) {
+                        XMLUtils.addFavourite(displaycities.getSelectionModel().getSelectedItem().toString());
+                    }
                 } catch (ParsingException | IOException ex) {
                 }
 
@@ -265,10 +279,13 @@ public class ClimatonixController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    // Deletes selected city
-                    XMLUtils.removeFavourite(selectcitydelete.getSelectionModel().getSelectedItem().toString());
+                    if (!selectcitydelete.getSelectionModel().isEmpty()) {
+                        // If a city is selected, delete selected city
+                        XMLUtils.removeFavourite(selectcitydelete.getSelectionModel().getSelectedItem().toString());
+                    }
                 } catch (ParsingException | IOException ex) {
                 }
+
                 try {
                     // Repopulate favouritecities List with new data
                     favouritecities.clear();
@@ -277,23 +294,23 @@ public class ClimatonixController implements Initializable {
                             favouritecities.add(XMLUtils.getFavourites().get(g));
                         }
                     }
-                    
+
                     // Check if favouritecities is empty
                     if (favouritecities.isEmpty()) {
                         // Clear comboboxes
                         selectcitydelete.getSelectionModel().clearSelection();
                         selectcity.getItems().clear();
-                        
+
                         selectcitydelete.getSelectionModel().clearSelection();
                         selectcitydelete.getItems().clear();
                     } else {
                         // Repopulate comboboxes
                         selectcity.getItems().clear();
                         selectcitydelete.getItems().clear();
-                        
+
                         selectcity.getItems().setAll(favouritecities);
                         selectcitydelete.getItems().setAll(favouritecities);
-                        
+
                         selectcity.getSelectionModel().selectLast(); // Select last by default
                     }
                 } catch (IOException | ParsingException ex) {

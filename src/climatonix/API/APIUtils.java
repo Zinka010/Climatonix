@@ -59,7 +59,7 @@ public class APIUtils {
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
-        
+
         // Close all reading utilities
         in.close();
         con.disconnect();
@@ -69,10 +69,10 @@ public class APIUtils {
     }
 
     /**
-     * Convert Kelvin to Celcius
+     * Convert Kelvin to Celsius
      *
-     * @param kelvin The tempature in Kelvin
-     * @return La tempature in degrees Celcius
+     * @param kelvin The temperature in Kelvin
+     * @return La temperature in degrees Celsius
      */
     private static double kelvinToCelcius(double kelvin) {
         return kelvin - 273.15;
@@ -82,19 +82,19 @@ public class APIUtils {
      * Return the weather of the JSON obtained from the "weather" request
      *
      * @param jSONObject The JSON data
-     * @return The tempature in celcius
+     * @return The temperature in Celsius
      * @throws JSONException The JSON is invalid
      */
-    public static Double getTempature(JSONObject jSONObject) throws JSONException{
+    public static Double getTempature(JSONObject jSONObject) throws JSONException {
 
         // Get the data under "main"
         JSONObject main = jSONObject.getJSONObject("main");
 
         // Get the tempature
-        double tempature = main.getDouble("temp");
+        double temperature = main.getDouble("temp");
 
         // Convert from kelvin to celcius
-        return kelvinToCelcius(tempature);
+        return kelvinToCelcius(temperature);
 
     }
 
@@ -104,7 +104,7 @@ public class APIUtils {
 
     /**
      * Return the wind speed of the JSON obtained from the "weather" request
-     * 
+     *
      * @param jSONObject The JSON data from the weather request
      * @return The speed of the wind in km/h
      * @throws JSONException The JSON is invalid
@@ -121,10 +121,11 @@ public class APIUtils {
         return msToKmH(speed);
 
     }
-    
+
     /**
-     * Return the description of the weather of the JSON obtained from the "weather" request
-     * 
+     * Return the description of the weather of the JSON obtained from the
+     * "weather" request
+     *
      * @param jSONObject The JSON data from the weather request
      * @return The description of the weather
      * @throws JSONException The JSON is invalid
@@ -132,10 +133,10 @@ public class APIUtils {
     public static String getDescription(JSONObject jSONObject) throws JSONException {
         // Get the Weather in the JSONArray format
         JSONArray weather = jSONObject.getJSONArray("weather");
-        
+
         // Get the first item in the JSONArray
         JSONObject weatherObj = weather.getJSONObject(0);
-        
+
         // Return the provided description
         return weatherObj.getString("description");
     }

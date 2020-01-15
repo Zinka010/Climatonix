@@ -20,19 +20,19 @@ public class CitiesImportUtil {
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
 
-            // Lire la première ligne
+            // Read first line
             String line = br.readLine();
 
-            // Loop dans chaque ligne
+            // Loop each line
             while (line != null) {
 
-                // Prendre attributes
+                // Take attributes
                 String[] attributes = line.split(",");
 
-                // Ajouter ville à villes
+                // Add City to Cities
                 cities.add(new City(attributes));
 
-                // Lire la prochaine ligne
+                // Read the next line
                 line = br.readLine();
             }
             return cities;

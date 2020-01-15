@@ -176,8 +176,6 @@ public class InterfaceClimatonix extends javax.swing.JFrame {
             // Update the labels with new values
             lblTemperature.setText(temperature + "°C");
             lblLocation.setText("in " + city + ".");
-        } catch (MalformedURLException e) {
-            System.out.println(e);
         } catch (ProtocolException ex) {
             System.out.println(ex);
         } catch (IOException ez) {

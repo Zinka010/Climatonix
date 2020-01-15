@@ -47,28 +47,28 @@ public class ClimatonixController implements Initializable {
 
     // Declare JavaFX fx:ids
     @FXML
-    private TextField searchcities;
+    private TextField searchCities;
 
     @FXML
-    private ListView displaycities;
+    private ListView displayCities;
 
     @FXML
-    private Button addfavourite;
+    private Button addFavourite;
 
     @FXML
     private Button refresh;
 
     @FXML
-    private Button removefavourite;
+    private Button removeFavourite;
 
     @FXML
-    private TextFlow displayweather;
+    private TextFlow displayWeather;
 
     @FXML
-    private ComboBox selectcity;
+    private ComboBox selectCity;
 
     @FXML
-    private ComboBox selectcitydelete;
+    private ComboBox selectCityDelete;
 
     /**
      * Initializes the controller class.
@@ -77,27 +77,27 @@ public class ClimatonixController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         // Create a new list of favourite cities
-        List<String> favouritecities = new ArrayList<>();
+        List<String> favouriteCities = new ArrayList<>();
         try {
-            // If xml file has favourite cities, add all to List favouritecities
+            // If xml file has favourite cities, add all to List favouriteCities
             if (XMLUtils.getFavourites() != null) {
-                favouritecities.clear();
+                favouriteCities.clear();
                 for (int g = 0; g < XMLUtils.getFavourites().size(); g++) {
-                    favouritecities.add(XMLUtils.getFavourites().get(g));
+                    favouriteCities.add(XMLUtils.getFavourites().get(g));
                 }
                 // If there are cities saved as favourite, populate comboboxes
-                if (!favouritecities.isEmpty()) {
-                    selectcity.getItems().clear();
-                    selectcity.getItems().setAll(favouritecities);
-                    selectcity.getSelectionModel().selectFirst(); // Select first item in combobox
+                if (!favouriteCities.isEmpty()) {
+                    selectCity.getItems().clear();
+                    selectCity.getItems().setAll(favouriteCities);
+                    selectCity.getSelectionModel().selectFirst(); // Select first item in combobox
 
-                    selectcitydelete.getItems().clear();
-                    selectcitydelete.getItems().setAll(favouritecities);
+                    selectCityDelete.getItems().clear();
+                    selectCityDelete.getItems().setAll(favouriteCities);
 
                     // Display the weather
                     try {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -105,24 +105,24 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
-                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
+                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex()))));
                         desc.setFill(Color.BLACK);
                         desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
 
                         // Display text objects
-                        displayweather.getChildren().clear();
-                        displayweather.getChildren().add(temp);
-                        displayweather.getChildren().add(lnbreak);
-                        displayweather.getChildren().add(desc);
-                        displayweather.getChildren().add(space);
-                        displayweather.getChildren().add(wind);
+                        displayWeather.getChildren().clear();
+                        displayWeather.getChildren().add(temp);
+                        displayWeather.getChildren().add(lnbreak);
+                        displayWeather.getChildren().add(desc);
+                        displayWeather.getChildren().add(space);
+                        displayWeather.getChildren().add(wind);
 
                         // Create and play fade animation on weather load
-                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
+                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayWeather);
                         anim.setFromValue(0.0);
                         anim.setToValue(1.0);
                         anim.play();
@@ -134,55 +134,60 @@ public class ClimatonixController implements Initializable {
         } catch (IOException | ParsingException ex) {
         }
 
-        searchcities.textProperty().addListener(new ChangeListener<String>() {
+        searchCities.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
-                if (!newValue.isEmpty()) {
-                    // Initialize variables
-                    List<String> searched = new ArrayList();
-                    AutocompleteUtil util = new AutocompleteUtil();
+                
+                // Make sure that the characters are valid (are letters)
+                if (!newValue.matches("\\sa-zA-Z*")) {
+                    searchCities.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+                    if (!searchCities.getText().isEmpty()) {
+                        // Initialize variables
+                        List<String> searched = new ArrayList();
+                        AutocompleteUtil util = new AutocompleteUtil();
 
-                    // Find searches matching cities in list using AutocompleteUtils
-                    for (int q = 0; q < util.query(searchcities.getText()).size(); q++) {
-                        searched.add(util.query(searchcities.getText()).get(q)); // Add them to List searched
-                    }
-
-                    // Display matching searches in city list
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            displaycities.getItems().clear();
-                            displaycities.getItems().setAll(searched);
+                        // Find searches matching cities in list using AutocompleteUtils
+                        for (int q = 0; q < util.query(searchCities.getText()).size(); q++) {
+                            searched.add(util.query(searchCities.getText()).get(q)); // Add them to List searched
                         }
-                    });
+
+                        // Display matching searches in city list
+                        Platform.runLater(new Runnable() {
+                            public void run() {
+                                displayCities.getItems().clear();
+                                displayCities.getItems().setAll(searched);
+                            }
+                        });
+                    }
                 }
             }
         });
-        
-        addfavourite.setOnAction(new EventHandler<ActionEvent>() {
+
+        addFavourite.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // Adds selected city to favourites using XMLUtils
                 try {
-                    if (!displaycities.getSelectionModel().isEmpty()) {
-                        XMLUtils.addFavourite(displaycities.getSelectionModel().getSelectedItem().toString());
+                    if (!displayCities.getSelectionModel().isEmpty()) {
+                        XMLUtils.addFavourite(displayCities.getSelectionModel().getSelectedItem().toString());
                     }
                 } catch (ParsingException | IOException ex) {
                 }
 
-                // Refresh favouritecities List and comboboxes
+                // Refresh favouriteCities List and comboboxes
                 try {
-                    favouritecities.clear();
+                    favouriteCities.clear();
                     for (int g = 0; g < XMLUtils.getFavourites().size(); g++) {
-                        favouritecities.add(XMLUtils.getFavourites().get(g));
+                        favouriteCities.add(XMLUtils.getFavourites().get(g));
                     }
 
-                    selectcity.getItems().clear();
-                    selectcity.getItems().setAll(favouritecities);
-                    selectcity.getSelectionModel().selectLast(); // Select the most recently added city by default
+                    selectCity.getItems().clear();
+                    selectCity.getItems().setAll(favouriteCities);
+                    selectCity.getSelectionModel().selectLast(); // Select the most recently added city by default
 
-                    selectcitydelete.getItems().clear();
-                    selectcitydelete.getItems().setAll(favouritecities);
+                    selectCityDelete.getItems().clear();
+                    selectCityDelete.getItems().setAll(favouriteCities);
                 } catch (IOException | ParsingException ex) {
                 }
             }
@@ -193,9 +198,9 @@ public class ClimatonixController implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     // Checks to make sure you have selected a real city
-                    if (selectcity.getSelectionModel().getSelectedIndex() != -1) {
+                    if (selectCity.getSelectionModel().getSelectedIndex() != -1) {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -203,24 +208,24 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
-                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
+                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex()))));
                         desc.setFill(Color.BLACK);
                         desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
 
                         // Display text objects
-                        displayweather.getChildren().clear();
-                        displayweather.getChildren().add(temp);
-                        displayweather.getChildren().add(lnbreak);
-                        displayweather.getChildren().add(desc);
-                        displayweather.getChildren().add(space);
-                        displayweather.getChildren().add(wind);
+                        displayWeather.getChildren().clear();
+                        displayWeather.getChildren().add(temp);
+                        displayWeather.getChildren().add(lnbreak);
+                        displayWeather.getChildren().add(desc);
+                        displayWeather.getChildren().add(space);
+                        displayWeather.getChildren().add(wind);
 
                         // Create and play fade animation on weather load
-                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
+                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayWeather);
                         anim.setFromValue(0.0);
                         anim.setToValue(1.0);
                         anim.play();
@@ -232,14 +237,14 @@ public class ClimatonixController implements Initializable {
         });
 
         // Same as refresh button and program launch, but triggers upon selecting a new city
-        selectcity.setOnAction(new EventHandler<ActionEvent>() {
+        selectCity.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
                     // Checks to make sure you have selected a real city
-                    if (selectcity.getSelectionModel().getSelectedIndex() != -1) {
+                    if (selectCity.getSelectionModel().getSelectedIndex() != -1) {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -247,24 +252,24 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
-                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouritecities.get(selectcity.getSelectionModel().getSelectedIndex()))));
+                        Text desc = new Text(APIUtils.getDescription(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex()))));
                         desc.setFill(Color.BLACK);
                         desc.setFont(Font.font("System", FontPosture.ITALIC, 40));
 
                         // Display text objects
-                        displayweather.getChildren().clear();
-                        displayweather.getChildren().add(temp);
-                        displayweather.getChildren().add(lnbreak);
-                        displayweather.getChildren().add(desc);
-                        displayweather.getChildren().add(space);
-                        displayweather.getChildren().add(wind);
+                        displayWeather.getChildren().clear();
+                        displayWeather.getChildren().add(temp);
+                        displayWeather.getChildren().add(lnbreak);
+                        displayWeather.getChildren().add(desc);
+                        displayWeather.getChildren().add(space);
+                        displayWeather.getChildren().add(wind);
 
                         // Create and play fade animation on weather load
-                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayweather);
+                        FadeTransition anim = new FadeTransition(Duration.millis(700), displayWeather);
                         anim.setFromValue(0.0);
                         anim.setToValue(1.0);
                         anim.play();
@@ -275,43 +280,43 @@ public class ClimatonixController implements Initializable {
             }
         });
 
-        removefavourite.setOnAction(new EventHandler<ActionEvent>() {
+        removeFavourite.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if (!selectcitydelete.getSelectionModel().isEmpty()) {
+                    if (!selectCityDelete.getSelectionModel().isEmpty()) {
                         // If a city is selected, delete selected city
-                        XMLUtils.removeFavourite(selectcitydelete.getSelectionModel().getSelectedItem().toString());
+                        XMLUtils.removeFavourite(selectCityDelete.getSelectionModel().getSelectedItem().toString());
                     }
                 } catch (ParsingException | IOException ex) {
                 }
 
                 try {
-                    // Repopulate favouritecities List with new data
-                    favouritecities.clear();
+                    // Repopulate favouriteCities List with new data
+                    favouriteCities.clear();
                     if (XMLUtils.getFavourites() != null) {
                         for (int g = 0; g < XMLUtils.getFavourites().size(); g++) {
-                            favouritecities.add(XMLUtils.getFavourites().get(g));
+                            favouriteCities.add(XMLUtils.getFavourites().get(g));
                         }
                     }
 
-                    // Check if favouritecities is empty
-                    if (favouritecities.isEmpty()) {
+                    // Check if favouriteCities is empty
+                    if (favouriteCities.isEmpty()) {
                         // Clear comboboxes
-                        selectcitydelete.getSelectionModel().clearSelection();
-                        selectcity.getItems().clear();
+                        selectCityDelete.getSelectionModel().clearSelection();
+                        selectCity.getItems().clear();
 
-                        selectcitydelete.getSelectionModel().clearSelection();
-                        selectcitydelete.getItems().clear();
+                        selectCityDelete.getSelectionModel().clearSelection();
+                        selectCityDelete.getItems().clear();
                     } else {
                         // Repopulate comboboxes
-                        selectcity.getItems().clear();
-                        selectcitydelete.getItems().clear();
+                        selectCity.getItems().clear();
+                        selectCityDelete.getItems().clear();
 
-                        selectcity.getItems().setAll(favouritecities);
-                        selectcitydelete.getItems().setAll(favouritecities);
+                        selectCity.getItems().setAll(favouriteCities);
+                        selectCityDelete.getItems().setAll(favouriteCities);
 
-                        selectcity.getSelectionModel().selectLast(); // Select last by default
+                        selectCity.getSelectionModel().selectLast(); // Select last by default
                     }
                 } catch (IOException | ParsingException ex) {
                 }

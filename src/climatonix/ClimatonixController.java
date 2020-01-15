@@ -93,7 +93,7 @@ public class ClimatonixController implements Initializable {
                     // Display the weather
                     try {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Integer.toString((int) Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -101,7 +101,7 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Integer.toString((int) Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
@@ -196,7 +196,7 @@ public class ClimatonixController implements Initializable {
                     // Checks to make sure you have selected a real city
                     if (selectCity.getSelectionModel().getSelectedIndex() != -1) {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Integer.toString((int) Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -204,7 +204,7 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Integer.toString((int) Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 
@@ -240,7 +240,7 @@ public class ClimatonixController implements Initializable {
                     // Checks to make sure you have selected a real city
                     if (selectCity.getSelectionModel().getSelectedIndex() != -1) {
                         // Create and configure Text by calling API methods
-                        Text temp = new Text((Double.toString(Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
+                        Text temp = new Text((Integer.toString((int) Math.round(APIUtils.getTempature(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + "°C");
                         temp.setFill(Color.BLACK);
                         temp.setFont(Font.font("System", 100));
 
@@ -248,7 +248,7 @@ public class ClimatonixController implements Initializable {
 
                         Text space = new Text(" ");
 
-                        Text wind = new Text("with winds of " + (Double.toString(Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
+                        Text wind = new Text("with winds of " + (Integer.toString((int) Math.round(APIUtils.getWindSpeed(APIUtils.request("weather", favouriteCities.get(selectCity.getSelectionModel().getSelectedIndex())))))) + " km/h");
                         wind.setFill(Color.BLACK);
                         wind.setFont(Font.font("System", FontPosture.ITALIC, 28));
 

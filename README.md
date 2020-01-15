@@ -3,6 +3,7 @@
 ## Afin d'éxécuter le programme il faut ajouter les dépendenses JSON in Java et GluonFX.
 
 ### Instructions pour NetBeans 8.2
+### Noter que le paqueate XOM est aussi requis
 
 #### JSON in Java installation
 

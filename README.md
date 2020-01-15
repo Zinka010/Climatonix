@@ -1,6 +1,6 @@
 # Climatonix
 
-## Afin d'éxécuter le programme il faut ajouter la dépedense JSONObject.
+## Afin d'éxécuter le programme il faut ajouter les dépendenses JSON in Java et GluonFX.
 
 ### Instructions pour NetBeans 8.2
 

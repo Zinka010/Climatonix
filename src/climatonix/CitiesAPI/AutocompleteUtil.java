@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package climatonix;
+package climatonix.CitiesAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,9 @@ public class AutocompleteUtil {
 
     private Cities cities;
     private ArrayList<City> selectedCities;
-
-    AutocompleteUtil() {
+    public AutocompleteUtil() {
         // Initialize cities
-        String fileName = "src/climatonix/citiesListSorted.csv";
+        String fileName = "src/climatonix/CitiesAPI/citiesListSorted.csv";
         cities = CitiesImportUtil.importCitiesFromCSV(fileName);
     }
 
